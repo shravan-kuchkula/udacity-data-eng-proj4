@@ -13,7 +13,7 @@ The **dotted red line** is the option we will be using for this project: **Spark
 * **Lake Storage**: S3
 * **Lake Processing**: Spark 
 
-The focus of this project is on the **dotted blue line**.
+The focus of this project is on the **dotted blue line**. The key thing to note here is that even though I am using AWS EMR, I am not using HDFS for lake storage, instead I am using S3 as my storage. Data is loaded into EMR for processing and the query/processing results are stored back into S3. Data Wrangling is done using `pyspark` and the processed data is stored back to S3 as `parquet files`.
 
 ![focus](images/focus.png)
 
@@ -52,10 +52,6 @@ And below is an example of what the data in a log file, 2018-11-12-events.json, 
 
 ![](images/logdataset.png)
 
-## Technology
-<p align="middle">
-  <img src="images/technology.png" />
-
 ## Project Structure
 * **etl.py**: The script reads song_data and load_data from S3, transforms them to create five different tables, and writes them to partitioned parquet files in table directories on S3.
 * **schema.py**: The script captures the column names as per star-schema design.
@@ -70,11 +66,15 @@ And below is an example of what the data in a log file, 2018-11-12-events.json, 
     * songplays table is partitioned by **year** and **month**.
 
 ## Methodology
-The script reads song_data and load_data from S3, transforms them to create five different tables, and writes them to partitioned parquet files in table directories on S3. 
+`etl.py` script makes use of PySpark to wrangling the data. It starts off by reading song_data and load_data from S3, transforms them to create five different tables, and writes them to partitioned parquet files in table directories on S3. 
 
 A simple star schema was employed for designing the tables.
 <p align="middle">
   <img src="images/tabledesign.png" />
+    
+## Technology
+<p align="middle">
+  <img src="images/technology.png" />
 
 ## How to run this project on AWS EMR?
 ### Create a Data Lake with Spark and AWS EMR.
