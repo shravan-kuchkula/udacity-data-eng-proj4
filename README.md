@@ -1,35 +1,29 @@
-## Data Lakes with Spark 
+## Project: Data Lakes with Spark 
 
-## Introduction
+**Project Description**: A music streaming company has grown their user base and song database and want to move their data from a data warehouse to a data lake. Their data resides in S3, in a directory of JSON logs on user activity on the app, as well as a directory with JSON metadata on the songs in their app. As their data engineer, I was tasked with building an ETL pipeline that extracts their data from S3, processes them using Spark, and loads the data back into S3 as a set of dimensional tables. This will allow their analytics team to continue finding insights in what songs their users are listening to.
 
-The goal of this project is to build an ETL pipeline for a Data Lake that extracts data from S3, processes the data using Spark, and loads the data back into S3 as a set of dimensional tables. 
+**Choice of a Data Lake on AWS**:
 
 There are several options when it comes to creating Data Lakes on AWS. Essentially it boils down to choosing what type of storage we want, the processing engine we want and whether we are using AWS-Managed solution or a Vendor managed solution.
 
-![datalakeoptions](images/datalakeoptions.png)
+The **dotted red line** is the option we will be using for this project: **Spark for processing and AWS EMR as our managed solution, and S3 for retrieving and storing our data.** A pictorial representation is shown below. 
 
-The **dotted red line** is the option we will be using for this project: **Spark for processing and AWS EMR as our managed solution, and S3 for retrieving and storing our data.** A pictorial representation is shown below. The focus of this project is on the **dotted blue line**. 
+![datalakeoptions](images/datalakeoptions.png)
 
 * **Lake Storage**: S3
 * **Lake Processing**: Spark 
 
+The focus of this project is on the **dotted blue line**.
 
 ![focus](images/focus.png)
 
-## Motivation
-A music streaming startup, Sparkify, has grown their user base and song database even more and want to move their data warehouse to a data lake. Their data resides in S3, in a directory of JSON logs on user activity on the app, as well as a directory with JSON metadata on the songs in their app.
-
-As their data engineer, you are tasked with building an ETL pipeline that extracts their data from S3, processes them using Spark, and loads the data back into S3 as a set of dimensional tables. This will allow their analytics team to continue finding insights in what songs their users are listening to.
-
-## Technology
-![technology](images/technology.png)
 
 ## Data description
 There are two main datasets that reside in S3.
-* **Song data**: `s3://udacity-dend/song-data/`
-* **Log data**: `s3://udacity-dend/log-data/`
+* **Song data**: `s3://<bucket>/song-data/`
+* **Log data**: `s3://<bucket>/log-data/`
 
-The log format is captured in `s3://udacity-dend/log_json_path.json`
+The log format is captured in `s3://<bucket>/log_json_path.json`
 
 ### Song dataset
 The first dataset is a subset of real data from the Million Song Dataset. Each file is in JSON format and contains metadata about a song and the artist of that song. The files are partitioned by the first three letters of each song's track ID. For example, here are filepaths to two files in this dataset.
@@ -57,6 +51,10 @@ log_data/2018/11/2018-11-13-events.json
 And below is an example of what the data in a log file, 2018-11-12-events.json, looks like.
 
 ![](images/logdataset.png)
+
+## Technology
+<p align="middle">
+  <img src="images/technology.png" />
 
 ## Project Structure
 * **etl.py**: The script reads song_data and load_data from S3, transforms them to create five different tables, and writes them to partitioned parquet files in table directories on S3.
